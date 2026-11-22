@@ -1,4 +1,6 @@
 from PIL import Image, ImageDraw, ImageFont
+from openpyxl import Workbook
+from openpyxl.styles import Font, PatternFill, Alignment
 
 class Wallet:
     def __init__(self, name, money, logs: list = []):
@@ -31,3 +33,18 @@ class Wallet:
 
         image.save("output.png")
         
+    def export_logs_to_xlsx(self):
+        workbook = Workbook()
+        worksheet = workbook.active
+        worksheet.title = "Logs"
+        
+        worksheet.append(["Description", "Amount"])
+        
+        for cell in worksheet[1]:
+            cell.font = Font(bold=True)
+            cell.fill = PatternFill("solid", fgColor="DDDDDD")
+        
+        for description, amount in self.logs:
+            worksheet.append([description, amount])
+            
+        workbook.save("logs.xlsx")
