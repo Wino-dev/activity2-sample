@@ -9,5 +9,8 @@ class Wallet:
         self.money += amount
         
     def spend_money(self, reason, amount):
-        self.logs.append((reason, amount)),
+        self.logs.append((reason, -(amount))),
         self.money -= amount
+        
+    def display_logs(self):
+        print(self.logs)
